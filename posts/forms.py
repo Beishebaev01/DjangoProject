@@ -24,4 +24,3 @@ class PostForm(forms.Form):
         if title and len(title) < 5:
             raise forms.ValidationError("Title must be at least 5 characters long.")
         return title
-    
