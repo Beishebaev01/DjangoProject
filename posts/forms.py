@@ -24,3 +24,15 @@ class PostForm(forms.Form):
         if title and len(title) < 5:
             raise forms.ValidationError("Title must be at least 5 characters long.")
         return title
+    
+class SearchForm(forms.Form):
+    search_q = forms.CharField(max_length=100, required=False)
+    category_id = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
+    orderings = (
+        ('title', 'A-Z'),
+        ('-title', 'Z-A'),
+        ('created_at', 'Oldest'),
+        ('-created_at', 'Newest'),
+    )
+    ordering = forms.ChoiceField(choices=orderings, required=False)
+    

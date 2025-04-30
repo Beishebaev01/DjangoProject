@@ -1,31 +1,32 @@
 {% extends "base.html" %}
 {% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post list</title>
-</head>
-<body>
-    {% block content %}
-        {% for post in posts %}
-            <div class="card" style="width: 18rem;">
-                {% if post.image %}
-                    <img src="{{ post.image.url }}" class="card-img-top" alt="...">
-                {% else %}
-                    <img src="{% static 'default.png' %}" class="card-img-top" alt="...">
-                {% endif %}
-                <div class="card-body">
-                <h5 class="card-title">{{post.title}}</h5>
-                <p class="card-text">{{post.content}}</p>
-                <p class="card-text">{{post.category}}</p>
-                <p class="card-text"><small class="text-muted">{{post.created_at}}</small></p>
-                <a href="/posts/{{post.id}}" class="btn btn-primary">Go to post</a>
-                </div>
+{% block content %}
+    <form action="" method="get">
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+    
+    {% for post in posts %}
+        <div class="card" style="width: 18rem;">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+            {% else %}
+                <img src="{% static 'default.png' %}" class="card-img-top" alt="...">
+            {% endif %}
+            <div class="card-body">
+            <h5 class="card-title">{{post.title}}</h5>
+            <p class="card-text">{{post.content}}</p>
+            <p class="card-text">{{post.category}}</p>
+            <p class="card-text"><small class="text-muted">{{post.created_at}}</small></p>
+            <a href="/posts/{{post.id}}" class="btn btn-primary">Go to post</a>
             </div>
+        </div>
+    {% endfor %}
+    <div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 20px;">
+        {% for i in max_pages %}
+        <a href="/posts/?page={{ i }}" class="btn btn-primary">
+            {{ i }}
+        </a>
         {% endfor %}
-    {% endblock %}
-</body>
-</html>
+    </div>
+{% endblock %}
